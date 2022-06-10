@@ -82,6 +82,7 @@ async function registerForPushNotificationsAsync() {
   }
 
   token = (await Notifications.getExpoPushTokenAsync()).data;
+  // const token = (await Notifications.getDevicePushTokenAsync()).data;
 
   if (Platform.OS === 'android') {
       Notifications.setNotificationChannelAsync('default', {

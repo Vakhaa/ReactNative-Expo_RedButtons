@@ -13,21 +13,13 @@ export default function Signin({navigation}){
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordRepeat, setPasswordRepeat] = useState("");
-  const [animate, setAnimate] = useState(true);
 
   useEffect(()=>{
-
-    if(typeof(animate)=='boolean'){
-      
-      setAnimate(new Promise((resolve)=>{
-        setInterval(()=>{setImage("https://i.ibb.co/4YNxkpm/red-button-off.png")},5000);
-
-        setInterval(()=>{setImage("https://i.ibb.co/c2G8F7f/red-button-on.png")},5000);
-        resolve(true);
-      }));
-
-    }
-  });
+    setInterval(()=>{
+      setTimeout(()=>{setImage("https://i.ibb.co/4YNxkpm/red-button-off.png")},1000);
+      setTimeout(()=>{setImage("https://i.ibb.co/c2G8F7f/red-button-on.png")},1000);
+    }, 2000);
+  },[]);
 
   useEffect(()=>{
     if(isLogin)
@@ -88,10 +80,7 @@ export default function Signin({navigation}){
       <Pressable
         onPress={()=> navigation.navigate("Login")}>
           {({pressed})=>{
-            return (<Text
-              style={{color: pressed? colors.white: "#000"}}
-            >Do you have account?</Text>)
-          }}
+            return (<Text style={{color: pressed? colors.white: "#000"}}>Do you have an account?</Text>)}}
       </Pressable>
     </View>
   )

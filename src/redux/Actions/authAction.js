@@ -148,7 +148,8 @@ export const signIn = (email, password, token) => dispatch => {
                 id: user.uid,
                 fullName: "Anonymous",
                 email: user.email,
-                photo: "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                photo: "https://cdn-icons-png.flaticon.com/512/149/149071.png",
+                tokenNotify: token
             }, 
             isLogin: true
         }));
@@ -157,7 +158,8 @@ export const signIn = (email, password, token) => dispatch => {
             id: user.uid,
             fullName: "Anonymous",
             email: user.email,
-            photo: "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+            photo: "https://cdn-icons-png.flaticon.com/512/149/149071.png",
+            tokenNotify: token
         })
 
         await setDoc(doc(db, "friends", user.uid), {
@@ -168,7 +170,7 @@ export const signIn = (email, password, token) => dispatch => {
             button: []
         });
 
-        dispatch(setTokenNotify(token));
+        // dispatch(setTokenNotify(token));
     })
     .catch((error) => {
         dispatch(signinErrorAction(error.message));
