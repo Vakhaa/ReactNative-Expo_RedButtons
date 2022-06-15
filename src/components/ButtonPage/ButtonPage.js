@@ -21,15 +21,6 @@ export default function ButtonPage({navigation, route}){
 
   const [modalVisible, setModalVisible] = useState(false);
 
-  // useEffect(()=>{
-  //   dispatch(getCurrentButton(route.params.buttonId));
-  //   dispatch(getFriends(user.id));
-
-  //   return () => {
-  //     dispatch(leaveCurrentButtonAction());
-  //   }
-  // },[])
-
   useEffect(()=>{
     dispatch(getCurrentButton(route.params.buttonId));
     dispatch(getFriends(user.id));
