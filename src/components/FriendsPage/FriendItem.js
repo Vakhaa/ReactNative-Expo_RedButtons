@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet,View, Text, Pressable, Image} from 'react-native';
 import { colors } from 'res';
 
-export default function  FriendItem({id, navigation, friend, isFriend}){
+export default function  FriendItem({ navigation, friend, isFriend}){
 
   const onClick = () => {
     // передать данные пользователя id

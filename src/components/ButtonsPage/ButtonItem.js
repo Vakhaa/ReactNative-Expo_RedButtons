@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { StyleSheet,View, Text, Pressable, Image} from 'react-native';
 import { colors, pattern } from 'res';
 
-export default function  ButtonItem({id, button, navigation}){
+export default function  ButtonItem({button, navigation}){
 
   const [image, setImage] = useState("");
 

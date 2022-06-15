@@ -29,12 +29,8 @@ export default function  FriendsPage({navigation}){
     <View style={{flex:1}}>
       {/* profile description */}
       <View>
-        {/* Buttons */}
-        <SafeAreaView style={styles.scrollAreaView}>
-          <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
-            <FriendsItems people={people} friends={friends} isFriends={isFriendsButton} navigation={navigation}/>
-          </ScrollView>
-        </SafeAreaView>
+        {/*Friends  Buttons */}
+        <FriendsItems people={people} friends={friends} isFriends={isFriendsButton} navigation={navigation}/>
       </View>
     </View>
     <View style={{width:'80%'}}>

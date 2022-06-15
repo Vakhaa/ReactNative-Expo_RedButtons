@@ -37,11 +37,7 @@ export default function  ButtonsPage({navigation}){
       {/* profile description */}
       <View>
         {/* Buttons */}
-        <SafeAreaView style={styles.scrollAreaView}>
-          <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
-            <ButtonsItems myButtons={myButtons} friendsButtons={friendsButtons} isMyButtons={isMyButtons} navigation={navigation}/>
-          </ScrollView>
-        </SafeAreaView>
+        <ButtonsItems myButtons={myButtons} friendsButtons={friendsButtons} isMyButtons={isMyButtons} navigation={navigation}/>
       </View>
     </View>
     <View>
