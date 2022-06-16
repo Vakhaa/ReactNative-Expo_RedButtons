@@ -2,9 +2,9 @@ import React, {useEffect, useState} from 'react';
 import { StyleSheet,Text, View,Pressable, TextInput, Alert, Image} from 'react-native';
 import { colors } from 'res';
 import { useSelector, useDispatch } from 'react-redux';
-import { signIn } from 'my-redux/Actions/authAction';
+import { signUp } from 'my-redux/Actions/authAction';
 
-export default function Signin({navigation}){
+export default function SignUp({navigation}){
 
   const { user, isLogin, tokenNotify} = useSelector(state => state.auth);
   const dispatch = useDispatch();
@@ -36,7 +36,7 @@ export default function Signin({navigation}){
       Alert.alert('Inccorect password!', 'Password didn`t match ...');
     }else{
       try{
-        dispatch(signIn(email, password, tokenNotify));
+        dispatch(signUp(email, password, tokenNotify));
       }catch(error){
         console.log(error);
       }

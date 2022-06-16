@@ -2,9 +2,9 @@ import {
     AUTH_REQUEST,
     AUTH_SUCCESS,
     AUTH_ERROR,
-    SIGNIN_REQUEST,
-    SIGNIN_SUCCESS,
-    SIGNIN_ERROR,
+    SIGNUP_REQUEST,
+    SIGNUP_SUCCESS,
+    SIGNUP_ERROR,
     LOGOUT_REQUEST,
     LOGOUT_SUCCESS,
     LOGOUT_ERROR,
@@ -33,18 +33,18 @@ function authReducer(state = initialState, action){
                 ...state,
                 error: null
             }
-        case SIGNIN_REQUEST:
+        case SIGNUP_REQUEST:
             return {
                 ...state
             };
-        case SIGNIN_SUCCESS:
+        case SIGNUP_SUCCESS:
             return {
                 ...state,
                 user: action.data.user,
                 isLogin: action.data.isLogin,
                 error: null
             };
-        case SIGNIN_ERROR:
+        case SIGNUP_ERROR:
             return {
                 ...state,
                 error: action.error //error.message error.code

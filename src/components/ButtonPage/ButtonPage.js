@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { ActivityIndicator, StyleSheet, Text, Image, View, Pressable, SafeAreaView, ScrollView, StatusBar} from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, Image, View, Pressable, SafeAreaView, Vibration, StatusBar} from 'react-native';
 import { colors, pattern } from 'res';
 import { useSelector, useDispatch } from 'react-redux';
 import {schedulePushNotification, sendRemoteNotify} from '../../utils/NotificationWrapper.js'
@@ -33,6 +33,7 @@ export default function ButtonPage({navigation, route}){
   },[button])
 
   const pressButton = async () => {
+    Vibration.vibrate([1 * 1000, 2 * 1000], false);
     setImage(pattern[button.pattern].on);
     
     button.friends.forEach(async  friend => {
@@ -47,6 +48,7 @@ export default function ButtonPage({navigation, route}){
 
     //await schedulePushNotification();
     setInterval(()=>{setImage(pattern[button.pattern].off)},500);
+    // Vibration.cancel();
   }
 
   const pressBack = () => {

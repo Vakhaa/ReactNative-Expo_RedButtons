@@ -10,7 +10,7 @@ import Login from '../Login/Login';
 import FriendsPage from '../FriendsPage/FriendsPage';
 import FriendPage from '../FriendPage/FriendPage';
 import ButtonPage from '../ButtonPage/ButtonPage';
-import Signin from '../Signin/Signin';
+import SignUp from '../SignUp/SignUp';
 
 import { useDispatch } from 'react-redux';
 import { logout } from 'my-redux/Actions/authAction';
@@ -29,7 +29,7 @@ export default function Navigation() {
         <Stack.Screen name="Friend" component={FriendPage} />
         <Stack.Screen name="Button" component={ButtonPage} />
         <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="Sign In" component={Signin} />
+        <Stack.Screen name="Sign Up" component={SignUp} />
       </Stack.Navigator>
     </NavigationContainer>
   );

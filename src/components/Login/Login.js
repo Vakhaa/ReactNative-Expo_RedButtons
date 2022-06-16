@@ -76,9 +76,9 @@ export default function  Login({navigation}){
         <Text style={{marginLeft:'40%'}}>Accept</Text> 
       </Pressable>
       <Pressable
-        onPress={()=> navigation.navigate("Sign In")}>
+        onPress={()=> navigation.navigate("Sign Up")}>
           {({pressed})=>{
-            return (<Text style={{color: pressed? colors.white: "#000"}}>If you don't have account, you can sign in.</Text>)
+            return (<Text style={{color: pressed? colors.white: "#000"}}>If you don't have account, you can sign up.</Text>)
           }}
       </Pressable>
     </View>

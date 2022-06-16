@@ -16,9 +16,9 @@ import {
     AUTH_REQUEST,
     AUTH_SUCCESS,
     AUTH_ERROR,
-    SIGNIN_REQUEST,
-    SIGNIN_SUCCESS,
-    SIGNIN_ERROR,
+    SIGNUP_REQUEST,
+    SIGNUP_SUCCESS,
+    SIGNUP_ERROR,
     LOGOUT_REQUEST,
     LOGOUT_SUCCESS,
     LOGOUT_ERROR,
@@ -54,22 +54,22 @@ export const authErrorAction = (error) => {
     }
 }
 
-export const signinRequestAction = () => {
+export const signUpRequestAction = () => {
     return {
-        type: SIGNIN_REQUEST
+        type: SIGNUP_REQUEST
     }
 }
 
-export const signinSuccessAction = (data) => {
+export const signUpSuccessAction = (data) => {
     return {
-        type: SIGNIN_SUCCESS,
+        type: SIGNUP_SUCCESS,
         data: data
     }
 }
 
-export const signinErrorAction = (error) => {
+export const signUpErrorAction = (error) => {
     return {
-        type: SIGNIN_ERROR,
+        type: SIGNUP_ERROR,
         error: error
     }
 }
@@ -133,17 +133,17 @@ export const logIn = (email, password, token) => async dispatch =>{
     });
 }
 
-export const signIn = (email, password, token) => dispatch => {
+export const signUp = (email, password, token) => dispatch => {
     let auth = getAuth();
     let db = getFirestore();
     
-    dispatch(signinRequestAction());
+    dispatch(signUpRequestAction());
 
     createUserWithEmailAndPassword(auth, email, password)
     .then(async (userCredential) => {
         // Signed in 
         const user = userCredential.user;
-        dispatch(signinSuccessAction({
+        dispatch(signUpSuccessAction({
             user:{
                 id: user.uid,
                 fullName: "Anonymous",
@@ -173,7 +173,7 @@ export const signIn = (email, password, token) => dispatch => {
         // dispatch(setTokenNotify(token));
     })
     .catch((error) => {
-        dispatch(signinErrorAction(error.message));
+        dispatch(signUpErrorAction(error.message));
     });
 }
 
