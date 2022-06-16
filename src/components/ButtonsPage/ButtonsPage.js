@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { StyleSheet, TextInput,View, SafeAreaView, ScrollView, StatusBar} from 'react-native';
+import { StyleSheet, TextInput,View, StatusBar} from 'react-native';
 import { colors } from 'res';
 import { useSelector, useDispatch } from 'react-redux';
 import ButtonsTools from './ButtonsTools';
@@ -33,15 +33,10 @@ export default function  ButtonsPage({navigation}){
 
   return (
   <View style={styles.body}>
-    <View style={{flex:1}}>
-      {/* profile description */}
-      <View>
-        {/* Buttons */}
-        <ButtonsItems myButtons={myButtons} friendsButtons={friendsButtons} isMyButtons={isMyButtons} navigation={navigation}/>
-      </View>
-    </View>
-    <View>
+    {/* Buttons */}
+    <ButtonsItems myButtons={myButtons} friendsButtons={friendsButtons} isMyButtons={isMyButtons} navigation={navigation}/>
       {/* Search */}
+    <View>
       <TextInput 
         style={styles.input}
         placeholder='Search'
@@ -78,15 +73,6 @@ const styles = StyleSheet.create({
       fontSize:20,
       marginTop:10,
       marginBottom:10
-    },
-    scrollAreaView: {
-      flex: 1,
-      paddingLeft: 20,
-      paddingRight: 20,
-      paddingTop: StatusBar.currentHeight + 20 
-    },
-    scrollView: {
-      marginHorizontal: 20,
     },
     text: {
       fontSize: 42,

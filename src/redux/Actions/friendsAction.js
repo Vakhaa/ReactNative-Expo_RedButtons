@@ -169,7 +169,7 @@ export const getFriends = (ownerId) => async dispatch => {
 
         let usersRef = collection(db, "users");
 
-        let data =[]
+        let data =[];
         const batches = [];
         let friends = friendsDoc.data().friends;
         
@@ -187,7 +187,7 @@ export const getFriends = (ownerId) => async dispatch => {
                 response.forEach((snap)=>{
                     data.push(snap.data());
                 });       
-            })
+            });
         });
 
         dispatch(getFriendsSuccessAction(data));

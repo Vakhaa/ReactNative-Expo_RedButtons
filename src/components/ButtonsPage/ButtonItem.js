@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { StyleSheet,View, Text, Pressable, Image} from 'react-native';
+import { StyleSheet,View, Text, Pressable, Image, StatusBar} from 'react-native';
 import { colors, pattern } from 'res';
 
 export default function  ButtonItem({button, navigation}){
@@ -39,6 +39,9 @@ export default function  ButtonItem({button, navigation}){
 const styles = StyleSheet.create({
     body: {
       flex: 1,
+      paddingLeft: 20,
+      paddingRight: 20,
+      marginHorizontal: 20,
       flexDirection:'row',
     },
     item:{

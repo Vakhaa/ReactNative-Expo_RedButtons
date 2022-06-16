@@ -4,10 +4,11 @@ import { colors, pattern } from 'res';
 import { useSelector, useDispatch } from 'react-redux';
 import {schedulePushNotification, sendRemoteNotify} from '../../utils/NotificationWrapper.js'
 import FriendsHistorySwitcher from './FriendsHistorySwitcher.js';
-import {getCurrentButton, leaveCurrentButtonAction, removeFriendFromButton} from '../../redux/Actions/buttonsAction'
+import {getCurrentButton, leaveCurrentButtonAction} from '../../redux/Actions/buttonsAction'
 import OwnerSettings from './OwnerSettings.js';
 import FoeSettings from './FoeSettings.js';
 import { getFriends } from '../../redux/Actions/friendsAction.js';
+import FriendsItems from './FriendsItems.js';
 
 export default function ButtonPage({navigation, route}){
 
@@ -109,16 +110,12 @@ export default function ButtonPage({navigation, route}){
         <FriendsHistorySwitcher isHistory={isHistory} setIsHistory={setIsHistory} friendsCount={button.friends.length-1}/>
       </View>
       <SafeAreaView style={styles.scrollAreaView}>
-        <ScrollView style={styles.scrollView}>
-          {isHistory? <History/> : 
-            button.friends.map( (friend, index) => {
-              if(friend.id == user.id) return <Empty/>
-              return (
-                <Friend key={index} navigation={navigation} 
-                isOwner={button.ownerId == user.id}
-                friend={friend} buttonId={route.params.buttonId}/>
-          )})}
-        </ScrollView>
+          {isHistory? <History/> :
+          <FriendsItems 
+            userId={user.id} 
+            friends={button.friends} 
+            buttonId={route.params.buttonId} 
+            buttonOwnerId={button.ownerId}/>}
       </SafeAreaView>
     </View>
   );
@@ -134,45 +131,9 @@ export default function ButtonPage({navigation, route}){
   );
 }
 
-const Friend = ({key, navigation, friend, buttonId, isOwner}) => {
-
-  let dispatch = useDispatch();
-
-  const pressRemove = () => {
-    dispatch(removeFriendFromButton(buttonId, friend.id));
-    dispatch(getCurrentButton(buttonId));
-  }
-
-  return (
-  <View style={styles.friend}>
-    <Pressable
-      style={({pressed}) => ({ backgroundColor: pressed? colors.primary: colors.white})}
-      // onPress={()=>{navigation.navigate("Friend", {friend, isFriend:true})}}
-      >
-      <View style={{marginRight:20, marginLeft: '10%', flexDirection:'row', alignItems:'center'}}>
-        <Image style={{width:40, height:40, borderRadius: 100}} source={{uri:friend.photo}}/>
-        <View style={{width:'60%'}}>
-          <Text style={{marginLeft:10}}>
-            {friend.fullName}
-          </Text>
-        </View>
-        {isOwner && <Pressable
-          style={({pressed}) => ({ backgroundColor: pressed? colors.error: colors.white, marginLeft: '10%'})}
-          onPress={pressRemove}>
-          <Image source={{uri:"https://endlessicons.com/wp-content/uploads/2013/11/cancel-icon.png"}} style={{width:50, height:50}} />
-        </Pressable>}
-      </View>
-    </Pressable>
-  </View>)
-}
-
 const History = () =>{
 
   return (<Text>History not implemented yet!!</Text>)
-}
-
-const Empty = () => {
-  return <></>
 }
 
 const styles = StyleSheet.create({
@@ -204,12 +165,6 @@ const styles = StyleSheet.create({
     },
     scrollAreaView: {
       flex: 1,
-    },
-    scrollView: {
-    },
-    friend:{
-      width:'100%',
-      margin: 10,
     },
     image: {
       width: 240, 

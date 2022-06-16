@@ -11,8 +11,7 @@ export default function  FriendItem({ navigation, friend, isFriend}){
   return (
   <View style={styles.body}>
     <Pressable onPress={onClick}
-      style={({pressed}) => ({ backgroundColor: pressed? colors.primary: colors.white, ...styles.item})}
-    >
+      style={({pressed}) => ({ backgroundColor: pressed? colors.primary: colors.white, ...styles.item})}>
       <View style={{marginRight:20, marginLeft: 15}}>
         <Image source={{uri:friend.photo}} style={styles.image} />
       </View>
@@ -28,6 +27,9 @@ export default function  FriendItem({ navigation, friend, isFriend}){
 const styles = StyleSheet.create({
     body: {
       flex: 1,
+      paddingLeft: 20,
+      paddingRight: 20,
+      marginHorizontal: 20,
       flexDirection:'row',
     },
     item:{
