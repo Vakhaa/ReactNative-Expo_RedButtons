@@ -170,14 +170,26 @@ export const getFriends = (ownerId) => async dispatch => {
         let usersRef = collection(db, "users");
 
         let data =[]
-        if(friendsDoc.data().friends.length >0){
-            let q = query(usersRef, where("id", "in", friendsDoc.data().friends));
-            const snapshot = await getDocs(q);
-
-            snapshot.forEach((snap)=>{
-                data.push(snap.data());
-            });
+        const batches = [];
+        let friends = friendsDoc.data().friends;
+        
+        while(friends.length){
+            // firestore limits batches to 10
+            const batch = friends.splice(0, 10);
+            let q = query(usersRef, where("id", "in", batch));
+            batches.push(getDocs(q));    
         }
+
+        // after all of the data is fetched, return it
+        await Promise.all(batches)
+        .then(content => {
+            content.flat().forEach((response) =>{
+                response.forEach((snap)=>{
+                    data.push(snap.data());
+                });       
+            })
+        });
+
         dispatch(getFriendsSuccessAction(data));
     }catch(error){
         dispatch(getFriendsErrorAction(error.message));

@@ -204,6 +204,7 @@ export const getMyButtons = (ownerId) => async dispatch => {
     }
 }
 
+//  Invalid Query. 'in' filters support a maximum of 10 elements in the value array.
 export const getCurrentButton = (buttonId) => async dispatch => {
     let db = getFirestore();
 
@@ -214,15 +215,24 @@ export const getCurrentButton = (buttonId) => async dispatch => {
 
         let usersRef = collection(db, "users");
         let friends =[]
+        const batches = [];
+        
+        let firendsBatches = button.data().friends;
 
-        if(button.data().friends.length > 0){
-            let q = query(usersRef, where("id", "in", button.data().friends));
-            const snapshot = await getDocs(q);
-    
-            snapshot.forEach((snap)=>{
-                friends.push(snap.data());
-            });    
-        };
+        while(firendsBatches.length){
+          // firestore limits batches to 10
+            const batch = firendsBatches.splice(0, 10);
+            let q = query(usersRef, where("id", "in", batch));            
+            batches.push(getDocs(q));
+        }
+
+        // after all of the data is fetched, return it
+        await Promise.all(batches)
+        .then(content => {
+        content.flat().forEach((response)=>{
+            response.forEach((snap)=>friends.push(snap.data()));
+        });
+        });
 
         dispatch(getCurrentButtonsSuccessAction({
             ...button.data(),
@@ -296,14 +306,28 @@ export const getButtons = (ownerId) => async dispatch => {
         memberOfButtonRef.then(async(snapshot)=>{
             
             let data =[]
-            let q = query(collection(db, "buttons"), where('id','in', snapshot.data().button));
-            let result = await getDocs(q);
+            
+            const batches = [];
+            let buttons = snapshot.data().button;
+            while(buttons.length){
+                // firestore limits batches to 10
+                const batch = buttons.splice(0, 10);
+                let q = query(collection(db, "buttons"), where('id','in', batch));
+                batches.push(getDocs(q));    
+            }
 
-            result.forEach((snap)=> data.push({
-                ...snap.data(),
-                createdAt: (new Date(snap.data().createdAt.seconds)).toString(),
-                id: snap.id
-            }));
+            // after all of the data is fetched, return it
+            await Promise.all(batches)
+            .then(content => {
+                content.flat().forEach((response) =>{
+                    response.forEach( (snap) => data.push({
+                        ...snap.data(),
+                        createdAt: (new Date(snap.data().createdAt.seconds)).toString(),
+                        id: snap.id
+                    }))
+                })
+            });
+
             dispatch(getButtonsSuccessAction(data));
     })
 
