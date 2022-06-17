@@ -2,7 +2,7 @@ import {
     collection, getDoc, getDocs, 
     getFirestore, updateDoc, setDoc,
     doc, arrayUnion, query, where, arrayRemove,
-    Timestamp, addDoc
+    Timestamp, addDoc, orderBy
 } from "firebase/firestore"; 
 import {getAuth} from "firebase/auth"; 
 
@@ -185,7 +185,7 @@ export const getMyButtons = (ownerId) => async dispatch => {
         
         let buttonsRef = collection(db, "buttons");
 
-        let q = query(buttonsRef, where("ownerId", "==", ownerId));
+        let q = query(buttonsRef, where("ownerId", "==", ownerId), orderBy("createdAt", "desc")); // orderBy("createdAt")
         const snapshot = await getDocs(q);
 
         let data =[];
@@ -218,11 +218,11 @@ export const getCurrentButton = (buttonId) => async dispatch => {
         const batches = [];
         
         let firendsBatches = button.data().friends;
-
+        console.log("GET CURRENT BUTTON");
         while(firendsBatches.length){
           // firestore limits batches to 10
             const batch = firendsBatches.splice(0, 10);
-            let q = query(usersRef, where("id", "in", batch));            
+            let q = query(usersRef, where("id", "in", batch), orderBy("fullName"));            
             batches.push(getDocs(q));
         }
 
@@ -312,7 +312,7 @@ export const getButtons = (ownerId) => async dispatch => {
             while(buttons.length){
                 // firestore limits batches to 10
                 const batch = buttons.splice(0, 10);
-                let q = query(collection(db, "buttons"), where('id','in', batch));
+                let q = query(collection(db, "buttons"), where('id','in', batch), orderBy("createdAt", "desc"));
                 batches.push(getDocs(q));    
             }
 

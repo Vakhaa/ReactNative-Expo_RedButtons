@@ -8,7 +8,7 @@ import { collection, getDoc,
     getDocs, getFirestore,
     updateDoc,  setDoc,
     doc, arrayUnion, 
-    query, where 
+    query, where, Timestamp 
 } from "firebase/firestore"; 
 
 
@@ -143,24 +143,22 @@ export const signUp = (email, password, token) => dispatch => {
     .then(async (userCredential) => {
         // Signed in 
         const user = userCredential.user;
-        dispatch(signUpSuccessAction({
-            user:{
-                id: user.uid,
-                fullName: "Anonymous",
-                email: user.email,
-                photo: "https://cdn-icons-png.flaticon.com/512/149/149071.png",
-                tokenNotify: token
-            }, 
-            isLogin: true
-        }));
-        
-        await setDoc(doc(db, "users", user.uid), {
+        const data = Timestamp.fromDate(new Date());
+        const newUser = {
             id: user.uid,
             fullName: "Anonymous",
             email: user.email,
             photo: "https://cdn-icons-png.flaticon.com/512/149/149071.png",
-            tokenNotify: token
-        })
+            tokenNotify: token,
+            createdAt: data
+        };
+
+        dispatch(signUpSuccessAction({
+            user: newUser, 
+            isLogin: true
+        }));
+        
+        await setDoc(doc(db, "users", user.uid), newUser)
 
         await setDoc(doc(db, "friends", user.uid), {
             friends:[]

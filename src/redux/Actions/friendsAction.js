@@ -1,7 +1,8 @@
 import { 
     collection, getDoc, getDocs, 
     getFirestore, updateDoc, setDoc,
-    doc, arrayUnion, query, where, arrayRemove
+    doc, arrayUnion, query, where, arrayRemove, 
+    orderBy
 } from "firebase/firestore"; 
 import {getAuth} from "firebase/auth"; 
 
@@ -165,6 +166,7 @@ export const getFriends = (ownerId) => async dispatch => {
         
         let friendsRef = doc(db, "friends", ownerId);
 
+        // let q = query(friendsRef, orderBy("createdAt"));
         let friendsDoc = await getDoc(friendsRef);
 
         let usersRef = collection(db, "users");
@@ -213,7 +215,7 @@ export const getPeople = (ownerId) => async dispatch => {
         snapshot.forEach((snap)=>{
             data.push(snap.data());
         });
-        
+        // filter there - js side 
         dispatch(getPeopleSuccessAction(data));        
     }catch(error){
         dispatch(getPeopleErrorAction(error.message));
